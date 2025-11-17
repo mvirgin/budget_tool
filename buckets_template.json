@@ -1,0 +1,39 @@
+[
+    {
+        "name": "Paycheck",
+        "patterns": [
+            ""
+        ],
+        "split": {
+            "Savings": 0.3,
+            "Needs": 0.6,
+            "Wants": 0.1
+        }
+    },
+    {
+        "name": "Savings",
+        "patterns": [
+            "",
+            ""
+        ],
+        "amount": 1000
+    },
+    {
+        "name": "Needs",
+        "patterns": [
+            ""
+        ],
+        "amount": 500
+    },
+    {
+        "name": "Wants",
+        "patterns": [
+            "Everything else goes here, no need to keep patterns."
+        ],
+        "amount": 125
+    },
+    {
+        "name": "Total",
+        "amount": 1625
+    }
+]

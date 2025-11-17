@@ -1,0 +1,7 @@
+## Ignore all csv and json files
+*.json
+*.csv
+
+## except for the templates
+!buckets_template.json
+!history_template.csv
