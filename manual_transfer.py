@@ -9,7 +9,7 @@ import shutil
 HISTORY_DIR = Path("history_csv")
 BACKUP_DIR = Path("backups")
 
-DEFAULT_LOG_FILE = HISTORY_DIR / "transfer_log.csv"
+DEFAULT_LOG_FILE = HISTORY_DIR / "transfer_log.csv"     # TODO this stuff could go in a config since I use it everywhere
 DEFAULT_BUCKET_FILE = Path("buckets.json")
 DEFAULT_BACKUP_BUCKET_FILE = BACKUP_DIR / "buckets_transfer_ver.json"
 
