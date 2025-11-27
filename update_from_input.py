@@ -169,15 +169,17 @@ if __name__ == "__main__":
     buckets_dict = {bucket["name"]: bucket for bucket in buckets_list}
 
     csvs = list(INPUT_DIR.glob("*.csv"))
-    if len(csvs) != 2:
-        raise ValueError(f"Expected exactly 2 CSV files, found {len(csvs)}")
-    
-    ## backup 2 most recently used input files as well
-    shutil.copy(csvs[0], export1_backup)    # TODO hardcoded but there should only ever be 2 so oh well
-    shutil.copy(csvs[1], export2_backup)
 
     # 2. Load + combine CSVs
-    rows = sort_by_date(merge_csvs(csvs[0], csvs[1]))
+    if len(csvs) == 2:
+        shutil.copy(csvs[0], export1_backup)
+        shutil.copy(csvs[1], export2_backup) 
+        rows = sort_by_date(merge_csvs(csvs[0], csvs[1]))
+    elif len(csvs) == 1:
+        shutil.copy(csvs[0], export1_backup) 
+        rows = sort_by_date(load_csv(csvs[0]))
+    else:
+        raise ValueError(f"Expected 1 or 2 input files, not {len(csvs)}")
 
     update_buckets(history_csv_path, buckets_dict, rows)
             ## maintain a csv that records each row with an extra column telling what bucket(s) that row hit
