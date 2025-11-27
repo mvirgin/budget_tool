@@ -11,6 +11,7 @@ from typing import Dict, Any
 import json
 import shutil
 from datetime import datetime
+from generate_graph import update_history_and_generate_graph
 
 ## TODO I should probably bite the bullet and add unique IDs to each row
 ## what if I buy two identical products from amazon - rows would be identical no? But I only block if they're in prior history
@@ -181,10 +182,9 @@ if __name__ == "__main__":
     else:
         raise ValueError(f"Expected 1 or 2 input files, not {len(csvs)}")
 
+    ## maintains a csv that records each row with an extra column telling what bucket(s) that row hit
     update_buckets(history_csv_path, buckets_dict, rows)
-            ## maintain a csv that records each row with an extra column telling what bucket(s) that row hit
-            ## should not overlap is overlapping is handled correctly with the most recent transactions thing. Or this could BE the most recent transactions thing / serve the same role
-
+            
     ## save new, updated buckets
     with open(BUCKETS_JSON, "w", encoding="utf-8") as f:
         # Convert dict back to a list for your JSON format
@@ -194,28 +194,5 @@ if __name__ == "__main__":
     ## clear input csvs
     [p.unlink() for p in csvs]     ## TODO add an if success then delete?
 
-
-# TODO add rebalancing tools so I can move money from one bucket to another (total balance stays the same)
-# TODO set up lm studio to act like claude and look at this codebase so I can add comments and things
-## TODO history.csv should be copied into backups after every run with a name that has the date/TS of the run
-
-def combine_csvs(csv1, csv2):
-    pass
-
-def main():
-    pass
-    ## ingest csvs - names given via command line - they'll be in a subfolder of this directory
-    ## combine them into a single csv via helper func (or probably a dict)
-    ## delete input csvs
-    ## make sure to check 'most recent transactions' csv to avoid overlap
-    ## iterate over csv, modifying buckets.json as we go - changing the "amount" field for each transaction's bucket
-        ## paychecks need to be split across buckets 60 needs 30 savings 10 wants
-        ## use regex or smthn to determine which transactions go in which buckets? - maybe that goes in the buckets json
-        ## if unkown, default to modifying the wants bucket
-        ## when done put clear most recent transactions csv and put new most recents in
-
-
-## long term:
-## host the buckets.json file somewhere so I can access from my phone anytime
-## maintain a 2nd, "guesstimate" version where user can directly specify which bucket they want to hit and put in a +/- amount
-## compare this with the actual the next time it is updated to see how accurate it is
+    # Call the graph generation script
+    update_history_and_generate_graph()

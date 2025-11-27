@@ -2,6 +2,9 @@
 *.json
 *.csv
 
+## pycache
+\__pycache__
+
 ## except for the templates
 !buckets_template.json
 !history_template.csv
